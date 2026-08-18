@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="goals-view">
+    <!-- Header Block -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <h1 class="mb-1">Savings Goals</h1>
+            <p class="text-secondary">Keep track of your long-term milestones (e.g. emergency funds, travel, big purchases).</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <button class="btn btn-emerald" onclick="openAddGoalModal()">
+                <i class="fas fa-plus me-2"></i> Create Savings Goal
+            </button>
+        </div>
+    </div>
+
+    <!-- Goals Grid -->
+    <div class="row" id="goals-list">
+        <!-- Loaded dynamically via JavaScript -->
+        <div class="col-12 text-center text-muted py-5">
+            <i class="fas fa-spinner fa-spin fa-2x mb-3 text-emerald"></i>
+            <p>Loading your savings milestones...</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Add/Edit Goal -->
+<div class="modal fade" id="goalModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="goalModalLabel">Create Savings Goal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="goalForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="goal-name" class="form-label">Goal Name / Milestone</label>
+                        <input type="text" class="form-control" id="goal-name" required placeholder="e.g. Emergency Fund">
+                    </div>
+                    <div class="mb-3">
+                        <label for="goal-target" class="form-label">Target Amount (₹)</label>
+                        <input type="number" step="0.01" min="1" class="form-control" id="goal-target" required placeholder="0.00">
+                    </div>
+                    <div class="mb-3">
+                        <label for="goal-current" class="form-label">Current Savings Balance (₹)</label>
+                        <input type="number" step="0.01" min="0" class="form-control" id="goal-current" value="0.00">
+                    </div>
+                    <div class="mb-3">
+                        <label for="goal-date" class="form-label">Target Date</label>
+                        <input type="date" class="form-control" id="goal-date" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-emerald">Save Goal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

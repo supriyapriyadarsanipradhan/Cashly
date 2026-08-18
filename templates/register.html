@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: calc(75vh - 100px)">
+    <div class="auth-container card-custom" style="max-width: 460px">
+        <div class="text-center mb-4">
+            <i class="fas fa-user-plus text-emerald" style="font-size: 3rem"></i>
+            <h2 class="mt-3 font-weight-bold">Create Account</h2>
+            <p class="text-secondary">Start tracking and automating your finances</p>
+        </div>
+        
+        <form method="POST" action="{{ url_for('auth.register') }}">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required placeholder="Choose a unique username">
+            </div>
+            
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" required placeholder="name@example.com">
+            </div>
+            
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required placeholder="At least 6 characters">
+            </div>
+            
+            <div class="mb-4">
+                <label for="monthly_income" class="form-label">Monthly Income (₹)</label>
+                <input type="number" step="0.01" class="form-control" id="monthly_income" name="monthly_income" value="0.00" placeholder="e.g. 5000">
+                <div class="form-text text-secondary" style="font-size: 0.8rem">
+                    This is used by the CASHLY AI engine to recommend custom budgets and assess savings rates.
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-emerald w-100 py-2">
+                <i class="fas fa-check-circle me-2"></i> Register Account
+            </button>
+        </form>
+        
+        <div class="text-center mt-4">
+            <span class="text-secondary" style="font-size: 0.9rem">Already registered?</span>
+            <a href="{{ url_for('auth.login') }}" class="font-weight-bold ms-1 text-emerald">Log In here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: calc(70vh - 100px)">
+    <div class="auth-container card-custom" style="max-width: 440px">
+        <div class="text-center mb-4">
+            <i class="fas fa-piggy-bank text-emerald" style="font-size: 3rem"></i>
+            <h2 class="mt-3 font-weight-bold">Welcome to CASHLY</h2>
+            <p class="text-secondary">Please enter your credentials to log in</p>
+        </div>
+        
+        <form method="POST" action="{{ url_for('auth.login') }}">
+            <div class="mb-3">
+                <label for="username_or_email" class="form-label">Username or Email</label>
+                <input type="text" class="form-control" id="username_or_email" name="username_or_email" required placeholder="Enter username or email">
+            </div>
+            
+            <div class="mb-3">
+                <div class="d-flex justify-content-between">
+                    <label for="password" class="form-label">Password</label>
+                </div>
+                <input type="password" class="form-control" id="password" name="password" required placeholder="••••••••">
+            </div>
+            
+            <div class="mb-4 form-check">
+                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                <label class="form-check-label text-secondary" style="font-size: 0.9rem" for="remember">Keep me logged in</label>
+            </div>
+            
+            <button type="submit" class="btn btn-emerald w-100 py-2">
+                <i class="fas fa-sign-in-alt me-2"></i> Log In
+            </button>
+        </form>
+        
+        <div class="text-center mt-4">
+            <span class="text-secondary" style="font-size: 0.9rem">New to CASHLY?</span>
+            <a href="{{ url_for('auth.register') }}" class="font-weight-bold ms-1 text-emerald">Create an Account</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

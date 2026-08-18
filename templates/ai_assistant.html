@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="chat-view">
+    <!-- Header Block -->
+    <div class="row align-items-center mb-4">
+        <div class="col-12">
+            <h1 class="mb-1">CASHLY AI Financial Assistant</h1>
+            <p class="text-secondary">Ask questions about your transactions, budgets, or savings rates, and get real-time summaries.</p>
+        </div>
+    </div>
+
+    <!-- Chat Console Column -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="chat-container">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="position-relative">
+                        <i class="fas fa-robot text-emerald"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle" style="width: 8px; height: 8px"></span>
+                    </div>
+                    <div>
+                        <h5 class="mb-0 font-size-md">CASHLY AI Agent</h5>
+                        <span class="text-secondary" style="font-size: 0.75rem">Online & auditing database</span>
+                    </div>
+                </div>
+
+                <!-- Chat Messages Scroll Panel -->
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-message assistant chat-message-markdown">
+                        Hi! I am **CASHLY AI**, your personal financial assistant. I can audit your transactions, analyze budgets, predict next month's spending, or calculate your overall financial health score.
+                        <br><br>
+                        Ask me a question or click one of the suggested prompts below to start!
+                    </div>
+                </div>
+
+                <!-- Suggested Prompt Chips -->
+                <div class="chip-container">
+                    <span class="chat-chip" onclick="sendChipPrompt('What is my financial health score?')">
+                        <i class="fas fa-heartbeat text-emerald me-1"></i> Analyze my health score
+                    </span>
+                    <span class="chat-chip" onclick="sendChipPrompt('Predict my spending next month')">
+                        <i class="fas fa-brain text-emerald me-1"></i> Predict next month spend
+                    </span>
+                    <span class="chat-chip" onclick="sendChipPrompt('How much did I spend this month?')">
+                        <i class="fas fa-wallet text-emerald me-1"></i> Total month spend
+                    </span>
+                    <span class="chat-chip" onclick="sendChipPrompt('Give me some saving tips')">
+                        <i class="fas fa-lightbulb text-emerald me-1"></i> Saving tips
+                    </span>
+                </div>
+
+                <!-- Input area -->
+                <form id="chatForm" class="chat-input-area">
+                    <input type="text" id="chatInput" class="form-control" placeholder="Ask CASHLY AI (e.g. &quot;Am I on budget?&quot;)..." required autocomplete="off">
+                    <button type="submit" class="btn btn-emerald px-4">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

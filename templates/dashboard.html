@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="dashboard-view">
+    <!-- Header Block -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <h1 class="mb-1">Financial Intelligence Dashboard</h1>
+            <p class="text-secondary">CASHLY AI has audited your monthly profiles and generated spending analysis.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <button class="btn btn-emerald" data-bs-toggle="modal" data-bs-target="#incomeModal">
+                <i class="fas fa-edit me-2"></i> Update Monthly Income
+            </button>
+        </div>
+    </div>
+
+    <!-- Stat Grid -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card-custom stat-card">
+                <div>
+                    <span class="stat-label">Monthly Income</span>
+                    <div class="stat-value text-emerald" id="total-income">₹0.00</div>
+                    <span class="text-secondary" style="font-size: 0.8rem">Base income limit</span>
+                </div>
+                <div class="stat-icon emerald">
+                    <i class="fas fa-wallet"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-custom stat-card">
+                <div>
+                    <span class="stat-label">Month-to-Date Spend</span>
+                    <div class="stat-value text-danger" id="total-spent">₹0.00</div>
+                    <span class="text-secondary" style="font-size: 0.8rem">Total accumulated spending</span>
+                </div>
+                <div class="stat-icon danger">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-custom stat-card">
+                <div>
+                    <span class="stat-label">Projected Monthly Savings</span>
+                    <div class="stat-value text-info" id="total-savings">₹0.00</div>
+                    <span class="text-secondary" style="font-size: 0.8rem">Remaining surplus fund</span>
+                </div>
+                <div class="stat-icon info">
+                    <i class="fas fa-piggy-bank"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Intelligence Layout -->
+    <div class="row g-4 mb-4">
+        <!-- Financial Health Card -->
+        <div class="col-lg-6">
+            <div class="card-custom">
+                <h4 class="mb-4"><i class="fas fa-heartbeat text-emerald me-2"></i> Financial Health Audit</h4>
+                <div class="row align-items-center">
+                    <div class="col-sm-5 mb-3 mb-sm-0 text-center">
+                        <div class="health-score-container">
+                            <svg class="health-score-svg">
+                                <circle class="health-score-track" cx="70" cy="70" r="58"></circle>
+                                <circle class="health-score-fill" id="health-score-fill" cx="70" cy="70" r="58"></circle>
+                            </svg>
+                            <div class="health-score-text">
+                                <div class="health-score-val" id="health-score-val">0</div>
+                                <div class="health-score-lbl">Score</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <h5 class="font-size-md mb-2">Health Diagnostics & Tips</h5>
+                        <ul class="list-unstyled mb-0" id="health-tips" style="font-size: 0.9rem">
+                            <!-- Injected by JavaScript -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Predict Spending Card -->
+        <div class="col-lg-6">
+            <div class="card-custom">
+                <h4 class="mb-4"><i class="fas fa-brain text-emerald me-2"></i> Expense Forecast</h4>
+                <div class="row align-items-center">
+                    <div class="col-sm-5 mb-3 mb-sm-0 text-center">
+                        <div class="stat-label">Next Month Forecast</div>
+                        <div class="stat-value text-warning py-2" id="predicted-spending" style="font-size: 2.25rem">₹0.00</div>
+                        <span class="category-pill cat-utilities-bills">Linear Projection</span>
+                    </div>
+                    <div class="col-sm-7">
+                        <h5 class="font-size-md mb-2">AI Trend Insights</h5>
+                        <p class="text-secondary mb-0" id="prediction-insight" style="font-size: 0.92rem; line-height: 1.5">
+                            Calculating linear trends based on your monthly cashflow transaction records...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Layout -->
+    <div class="row g-4">
+        <!-- Spending breakdown doughnut -->
+        <div class="col-md-6">
+            <div class="card-custom" style="min-height: 380px;">
+                <h4 class="mb-4"><i class="fas fa-chart-pie text-emerald me-2"></i> Category Breakdown</h4>
+                <div class="position-relative" style="height: 280px;">
+                    <canvas id="breakdownChart"></canvas>
+                    <div id="breakdown-empty" class="d-none d-flex flex-column align-items-center justify-content-center h-100 text-muted">
+                        <i class="fas fa-chart-pie fa-3x mb-3"></i>
+                        <p>No transactions registered for this month yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Spending trends line -->
+        <div class="col-md-6">
+            <div class="card-custom" style="min-height: 380px;">
+                <h4 class="mb-4"><i class="fas fa-chart-area text-emerald me-2"></i> Monthly Spending Trend</h4>
+                <div class="position-relative" style="height: 280px;">
+                    <canvas id="trendsChart"></canvas>
+                    <div id="trends-empty" class="d-none d-flex flex-column align-items-center justify-content-center h-100 text-muted">
+                        <i class="fas fa-chart-line fa-3x mb-3"></i>
+                        <p>Accumulate transaction logs over multiple months to display visual trends.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Update Income -->
+<div class="modal fade" id="incomeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-edit text-emerald me-2"></i> Update Monthly Income</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="incomeForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="monthlyIncomeInput" class="form-label">Monthly Net Income (₹)</label>
+                        <input type="number" step="0.01" min="0" class="form-control" id="monthlyIncomeInput" value="{{ current_user.monthly_income }}" required>
+                        <div class="form-text text-secondary" style="font-size: 0.8rem">
+                            Updating your income will recalculate your savings rate and automatically generate recommended category budgets if you don't have any configured.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-emerald">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
